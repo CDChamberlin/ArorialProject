@@ -24,22 +24,25 @@ export default function LoginPage() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="">
-            <input
-                type="email"
-                name="email"
-                id="userID"
-                placeholder="Email"
-                required
-            />
-            <input
-                type="password"
-                name="password"
-                id="userPassword"
-                placeholder="Password"
-                required
-            />
-            <button type="submit">Login</button>
-        </form>
+        <>
+            <h1>Custom Sign In Page</h1>
+            <form onSubmit={handleSubmit} className="">
+                <input
+                    type="email"
+                    name="email"
+                    id="userID"
+                    placeholder="Email"
+                    required
+                />
+                <input
+                    type="password"
+                    name="password"
+                    id="userPassword"
+                    placeholder="Password"
+                    required
+                />
+                <button type="submit">Login</button>
+            </form>
+        </>
     );
 }
