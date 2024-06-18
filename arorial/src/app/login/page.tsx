@@ -1,4 +1,5 @@
-import { useRouter } from "next/router";
+"use client";
+import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
 
 export default function LoginPage() {
@@ -23,7 +24,7 @@ export default function LoginPage() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="">
             <input
                 type="email"
                 name="email"
