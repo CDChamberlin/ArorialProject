@@ -135,4 +135,6 @@ dist
 # vercel
 .vercel
 
+#Miscellaneous
 *.pem
+taskList.md
