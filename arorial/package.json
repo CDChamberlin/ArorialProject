@@ -9,10 +9,12 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "mysql2": "^3.10.1",
         "next": "latest",
         "next-auth": "beta",
         "react": "^18",
-        "react-dom": "^18"
+        "react-dom": "^18",
+        "sequelize": "^6.37.3"
     },
     "devDependencies": {
         "@types/node": "^20",
