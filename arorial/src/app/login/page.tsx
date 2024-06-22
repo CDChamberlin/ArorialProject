@@ -7,13 +7,13 @@ export default function LoginPage() {
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        const email = formData.get("email");
+        const username = formData.get("username");
         const password = formData.get("password");
 
-        const response = await fetch("/api/auth/login", {
+        const response = await fetch("/api/auth/callback/credentials", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ username, password }),
         });
 
         if (response.ok) {
@@ -26,18 +26,18 @@ export default function LoginPage() {
     return (
         <>
             <h1>Custom Sign In Page</h1>
-            <form onSubmit={handleSubmit} className="">
+            <form onSubmit={handleSubmit}>
                 <input
-                    type="email"
-                    name="email"
-                    id="userID"
-                    placeholder="Email"
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder="Username"
                     required
                 />
                 <input
                     type="password"
                     name="password"
-                    id="userPassword"
+                    id="password"
                     placeholder="Password"
                     required
                 />
