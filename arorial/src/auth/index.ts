@@ -1,8 +1,19 @@
+import SequelizeAdapter, { models } from "@auth/sequelize-adapter";
 import NextAuth, { NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { DataTypes, Sequelize } from "sequelize";
 
 export const BASE_PATH = "/api/auth";
 
+const sequelize = new Sequelize({
+    host: process.env.DB_PORT,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    dialect: "mysql",
+    dialectModule: require("mysql2"),
+    database: process.env.DB_NAME,
+    benchmark: true,
+});
 const authOptions: NextAuthConfig = {
     pages: {
         signIn: "/login",
@@ -46,6 +57,14 @@ const authOptions: NextAuthConfig = {
             },
         }),
     ],
+    adapter: SequelizeAdapter(sequelize, {
+        models: {
+            User: sequelize.define("user", {
+                ...models.User,
+                password: { allowNull: false, type: DataTypes.STRING },
+            }),
+        },
+    }),
     basePath: BASE_PATH,
     secret: process.env.AUTH_SECRET,
 };

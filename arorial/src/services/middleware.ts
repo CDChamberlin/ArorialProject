@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const protectedRoutes = ["/dashboard", "/profile"];
 
-const unprotectedRoutes = ["/", "/login"];
+const unprotectedRoutes = ["/", "/login", "/signout"];
 
 export default async function middleware(request: NextRequest) {
     const session = await auth();

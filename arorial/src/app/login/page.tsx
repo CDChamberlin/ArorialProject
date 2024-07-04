@@ -1,10 +1,12 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 export default function LoginPage() {
-    const router = useRouter();
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const [csrfToken, setCsrfToken] = useState<string>("");
+    const router = useRouter();
 
     useEffect(() => {
         const fetchCsrfToken = async () => {
@@ -36,22 +38,45 @@ export default function LoginPage() {
 
     return (
         <>
-            <h1>Custom Sign In Page</h1>
-            <form onSubmit={handleSubmit}>
+            <h1 className="text-4xl font-bold text-center dark:text-white">
+                Adventurer Check - In
+            </h1>
+            <form
+                className="shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-md mx-auto"
+                onSubmit={handleSubmit}
+            >
                 <input type="hidden" name="csrfToken" value={csrfToken} />
+                <label
+                    htmlFor="username"
+                    className="block text-md font-bold mb-2"
+                >
+                    Username
+                </label>
                 <input
                     type="text"
                     name="username"
                     id="username"
                     placeholder="Username"
                     required
+                    className="dark: text-gray-600 mb-2"
                 />
+                <label
+                    htmlFor="password"
+                    className="block text-md font-bold mb-2"
+                >
+                    Password
+                </label>
                 <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="password"
                     id="password"
                     placeholder="Password"
+                    value={password}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        setPassword(e.target.value)
+                    }
                     required
+                    className="dark: text-gray-600 mb-2"
                 />
                 <button type="submit">Login</button>
             </form>
