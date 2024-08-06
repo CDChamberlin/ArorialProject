@@ -1,13 +1,23 @@
-import { compare, hash } from "bcrypt";
+import * as argon2 from "argon2-browser";
 
-export async function hashPassword(password: string) {
-    const hashedPassword = await hash(password, 12);
-    return hashedPassword;
-}
-export async function isValidPassword(
+export const hashPassword = async (
     password: string,
-    hashedPassword: string
-) {
-    const isValid = await compare(password, hashedPassword);
-    return isValid;
-}
+    salt: string
+): Promise<string> => {
+    const { encoded } = await argon2.hash({
+        pass: password,
+        salt: new TextEncoder().encode(salt), // Convert the salt to a Uint8Array
+    });
+    return encoded;
+};
+
+export const verifyPassword = async (
+    encoded: string,
+    password: string
+): Promise<boolean> => {
+    const match = await argon2.verify({
+        encoded,
+        pass: password,
+    });
+    return match === true;
+};

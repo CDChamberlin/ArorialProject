@@ -28,7 +28,7 @@
         "**/*.ts",
         "**/*.tsx",
         ".next/types/**/*.ts",
-        "src/ultils/sequelize.js"
+        "src/utils/sequelize.js"
     ],
     "exclude": ["node_modules"]
 }

@@ -1,7 +1,7 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth, { NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { isValidPassword } from "utils/hash";
+import { verifyPassword } from "utils/hash";
 import prisma from "../../lib/prisma";
 
 export const BASE_PATH = "/api/auth";
@@ -37,16 +37,19 @@ const authOptions: NextAuthConfig = {
                 if (!user.password) {
                     throw new Error("Please use alternate login method");
                 }
-                const isPasswordMatch = await isValidPassword(
+                const isPasswordMatch = await verifyPassword(
                     credentials.password,
                     user.password
                 );
-
-                return {
-                    id: user.id,
-                    name: user.name,
-                    email: user.email,
-                };
+                if (isPasswordMatch) {
+                    return {
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                    };
+                } else {
+                    throw new Error("Email and password are invalid");
+                }
             },
         }),
     ],

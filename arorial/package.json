@@ -11,16 +11,17 @@
     "dependencies": {
         "@auth/prisma-adapter": "^2.4.1",
         "@prisma/client": "^5.17.0",
-        "bcrypt": "^5.1.1",
+        "argon2-browser": "^1.18.0",
         "mysql2": "^3.10.2",
         "next": "latest",
         "next-auth": "^5.0.0-beta.20",
+        "node-gyp": "^10.2.0",
         "react": "^18",
         "react-dom": "^18",
         "sequelize": "^6.37.3"
     },
     "devDependencies": {
-        "@types/bcrypt": "^5.0.2",
+        "@types/argon2-browser": "^1.18.4",
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
