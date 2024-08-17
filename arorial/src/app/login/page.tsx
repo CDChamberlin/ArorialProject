@@ -1,84 +1,57 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { faEye } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 
 export default function LoginPage() {
-    const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [csrfToken, setCsrfToken] = useState<string>("");
-    const router = useRouter();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
-    useEffect(() => {
-        const fetchCsrfToken = async () => {
-            const res = await fetch("/api/auth/csrf");
-            const data = await res.json();
-            setCsrfToken(data.csrfToken);
-        };
-        fetchCsrfToken();
-    }, []);
+    const togglePasswordVisibility = () => {
+        setShowPassword(showPassword ? false : true);
+    };
 
-    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const username = formData.get("username") as string;
-        const password = formData.get("password") as string;
-
-        const response = await fetch("/api/auth/callback/credentials", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ csrfToken, username, password }),
+        // Call signIn with the credentials
+        await signIn("credentials", {
+            redirect: false,
+            username,
+            password,
         });
-
-        if (response.ok) {
-            router.push("/profile");
-        } else {
-            // Handle errors
-        }
-    }
+    };
 
     return (
         <>
             <h1 className="text-4xl font-bold text-center dark:text-white">
                 Adventurer Check - In
             </h1>
-            <form
-                className="shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-md mx-auto"
-                onSubmit={handleSubmit}
-            >
-                <input type="hidden" name="csrfToken" value={csrfToken} />
-                <label
-                    htmlFor="username"
-                    className="block text-md font-bold mb-2"
-                >
-                    Username
-                </label>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="userName">User Name</label>
                 <input
+                    id="userName"
                     type="text"
-                    name="username"
-                    id="username"
-                    placeholder="Username"
-                    required
-                    className="dark: text-gray-600 mb-2"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                 />
-                <label
-                    htmlFor="password"
-                    className="block text-md font-bold mb-2"
-                >
-                    Password
-                </label>
+                <label htmlFor="password">Password</label>
                 <input
                     type={showPassword ? "text" : "password"}
                     name="password"
                     id="password"
                     placeholder="Password"
-                    value={password}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        setPassword(e.target.value)
-                    }
                     required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="dark: text-gray-600 mb-2"
                 />
-                <button type="submit">Login</button>
+                <FontAwesomeIcon
+                    icon={faEye}
+                    onClick={togglePasswordVisibility}
+                />
+                <button type="submit">Sign In</button>
             </form>
         </>
     );
