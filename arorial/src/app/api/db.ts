@@ -1,23 +1,16 @@
-import { Sequelize } from "sequelize";
+import { PrismaClient } from "@prisma/client";
 
-const sequelize = new Sequelize({
-    host: process.env.DB_HOST,
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    dialect: "mysql",
-    dialectModule: require("mysql2"),
-    benchmark: true,
-});
+const prisma = new PrismaClient();
 
 (async () => {
     try {
-        await sequelize.authenticate();
+        await prisma.$connect();
         console.log("Connection has been established successfully");
 
-        await sequelize.sync({ alter: true });
+        // You don't need to sync the schema as Prisma handles migrations
     } catch (error) {
         console.error("Unable to connect to the database: ", error);
     }
 })();
-export default sequelize;
+
+export default prisma;
