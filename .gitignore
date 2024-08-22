@@ -138,3 +138,7 @@ dist
 #Miscellaneous
 *.pem
 taskList.md
+
+# Prisma
+prisma/migrations/*
+
