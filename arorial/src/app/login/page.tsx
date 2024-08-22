@@ -2,6 +2,7 @@
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function LoginPage() {
@@ -53,6 +54,7 @@ export default function LoginPage() {
                 />
                 <button type="submit">Sign In</button>
             </form>
+            <Link href={"/signup"}>Adventurer Registration</Link>
         </>
     );
 }
