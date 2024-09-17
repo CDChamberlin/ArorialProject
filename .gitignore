@@ -89,6 +89,8 @@ next-env.d.ts
 arorial/.next
 /out/
 
+# VS Code
+.vscode
 
 # Nuxt.js build / generate output
 .nuxt
