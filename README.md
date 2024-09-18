@@ -97,5 +97,4 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 If you have any questions or suggestions, please feel free to reach out:
 
--   **Email:** cdchamberlin.rva@gmail.com
 -   **GitHub:** [CDChamberlin](https://github.com/CDChamberlin)
